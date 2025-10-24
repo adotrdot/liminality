@@ -40,6 +40,12 @@ public class PrototypeSegmentObjectPool : MonoBehaviour
     {
         return GetPathSegment(SegmentType.StraightPathSegment);
     }
+
+    public void ReturnPathSegment(GameObject segment)
+    {
+        segment.SetActive(false);
+        segment.transform.SetParent(transform);
+    }
     
     #endregion
 

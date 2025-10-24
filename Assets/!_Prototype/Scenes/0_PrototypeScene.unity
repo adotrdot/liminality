@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 61545534}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -248,9 +248,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d64a0e054ac58444e9f295868a41eb01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RB: {fileID: 61545533}
-  MovementForce: 20
-  MaxMovementSpeed: 10
+  m_RB: {fileID: 61545533}
+  m_movementForce: 20
+  m_maxMovementSpeed: 10
+  m_levelSpawner: {fileID: 318442132}
 --- !u!61 &61545535
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -325,9 +326,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 296348192}
-  - {fileID: 239441123}
   - {fileID: 1701299412}
+  - {fileID: 239441123}
   - {fileID: 1979534832}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -501,7 +501,7 @@ GameObject:
   m_Component:
   - component: {fileID: 239441123}
   m_Layer: 0
-  m_Name: CenterSegment
+  m_Name: Segment2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -516,7 +516,7 @@ Transform:
   m_GameObject: {fileID: 239441122}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 50, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -540,7 +540,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6190410913714399073, guid: 097eb6c71b38b55488d39ae38f185d72, type: 3}
       propertyPath: m_TagString
-      value: PathSegment
+      value: StraightPathSegment
       objectReference: {fileID: 0}
     - target: {fileID: 7718949381110472062, guid: 097eb6c71b38b55488d39ae38f185d72, type: 3}
       propertyPath: m_LocalPosition.x
@@ -592,37 +592,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7718949381110472062, guid: 097eb6c71b38b55488d39ae38f185d72, type: 3}
   m_PrefabInstance: {fileID: 266472113}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &296348191
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 296348192}
-  m_Layer: 0
-  m_Name: NextSegment
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &296348192
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 296348191}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 50, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 176736307}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &318442130
 GameObject:
   m_ObjectHideFlags: 0
@@ -668,10 +637,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_segmentObjectPool: {fileID: 1979534833}
-  m_segmentHeight: 0
-  m_currentSegmentSpawnPoint: {fileID: 239441122}
-  m_nextSegmentSpawnPoint: {fileID: 296348191}
-  m_prevSegmentSpawnPoint: {fileID: 1701299411}
+  m_segmentHeight: 50
+  m_segmentSpawnPoint1: {fileID: 1701299411}
+  m_segmentSpawnPoint2: {fileID: 239441122}
 --- !u!1 &462756355
 GameObject:
   m_ObjectHideFlags: 0
@@ -862,7 +830,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6190410913714399073, guid: 097eb6c71b38b55488d39ae38f185d72, type: 3}
       propertyPath: m_TagString
-      value: StraigthPathSegment
+      value: StraightPathSegment
       objectReference: {fileID: 0}
     - target: {fileID: 7718949381110472062, guid: 097eb6c71b38b55488d39ae38f185d72, type: 3}
       propertyPath: m_LocalPosition.x
@@ -924,7 +892,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1701299412}
   m_Layer: 0
-  m_Name: PrevSegment
+  m_Name: Segment1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -939,7 +907,7 @@ Transform:
   m_GameObject: {fileID: 1701299411}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -50, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -963,7 +931,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6190410913714399073, guid: 097eb6c71b38b55488d39ae38f185d72, type: 3}
       propertyPath: m_TagString
-      value: PathSegment
+      value: StraightPathSegment
       objectReference: {fileID: 0}
     - target: {fileID: 7718949381110472062, guid: 097eb6c71b38b55488d39ae38f185d72, type: 3}
       propertyPath: m_LocalPosition.x
