@@ -553,8 +553,8 @@ GameObject:
   - component: {fileID: 7238622769626885596}
   - component: {fileID: 6126843066461890768}
   m_Layer: 0
-  m_Name: NextSegmentTrigger
-  m_TagString: NextTrigger
+  m_Name: SegmentTrigger
+  m_TagString: SegmentTrigger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

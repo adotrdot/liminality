@@ -15,6 +15,7 @@ public class PrototypeLevelSpawner : MonoBehaviour
     [Header("Segment Spawn Points")]
     [SerializeField] private GameObject m_segmentSpawnPoint1;
     [SerializeField] private GameObject m_segmentSpawnPoint2;
+    private int m_segmentIndex = 0;
     
     #endregion
 
@@ -41,14 +42,20 @@ public class PrototypeLevelSpawner : MonoBehaviour
 
     #region Public Methods
 
-    public void NextTriggerHandle(Transform collisionRoot, bool isEnteredFromBelow)
+    public void TriggerHandle(Transform collisionRoot, bool isEnteredFromBelow)
     {
         GameObject currentSpawnPoint = collisionRoot.gameObject;
         GameObject otherSpawnPoint = (currentSpawnPoint == m_segmentSpawnPoint1)
                                         ? m_segmentSpawnPoint2 : m_segmentSpawnPoint1;
+        
+        // Deactivate segment in other spawn point
+        DeactivateSegmentAtPoint(otherSpawnPoint);
 
         if (isEnteredFromBelow)
         {
+            // Increment segment index
+            m_segmentIndex++;
+
             // Place other spawn point above current
             otherSpawnPoint.transform.position = new Vector2(
                 currentSpawnPoint.transform.position.x,
@@ -60,34 +67,25 @@ public class PrototypeLevelSpawner : MonoBehaviour
         }
         else
         {
-            // If entered from above, deactivate segment in other spawn point
-            // and move them back to object pool
-            DeactivateSegmentAtPoint(otherSpawnPoint);
-        }
-    }
-    
-    public void PrevTriggerHandle(Transform collisionRoot, bool isEnteredFromBelow)
-    {
-        GameObject currentSpawnPoint = collisionRoot.gameObject;
-        GameObject otherSpawnPoint = (currentSpawnPoint == m_segmentSpawnPoint1)
-                                        ? m_segmentSpawnPoint2 : m_segmentSpawnPoint1;
+            // Decrement segment index
+            m_segmentIndex--;
 
-        if (isEnteredFromBelow)
-        {
-            // Deactivate segment in other spawn point
-            // and move them back to object pool
-            DeactivateSegmentAtPoint(otherSpawnPoint);
-        }
-        else
-        {
             // Place other spawn point below current
             otherSpawnPoint.transform.position = new Vector2(
                 currentSpawnPoint.transform.position.x,
                 currentSpawnPoint.transform.position.y - m_segmentHeight
             );
 
-            // Spawn straight path segment at other spawn point
-            SpawnStraightPathSegment(otherSpawnPoint);
+            if (m_segmentIndex > 1)
+            {
+                // Spawn straight path segment at other spawn point
+                SpawnStraightPathSegment(otherSpawnPoint);
+            }
+            else if (m_segmentIndex == 1)
+            {
+                // Spawn beginning path segment at other spawn point
+                SpawnBeginningPathSegment(otherSpawnPoint);
+            }
         }
     }
 

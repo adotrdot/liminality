@@ -5,9 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - BeginningPathSegment
-  - NextTrigger
-  - PrevTrigger
   - StraightPathSegment
+  - SegmentTrigger
   layers:
   - Default
   - TransparentFX

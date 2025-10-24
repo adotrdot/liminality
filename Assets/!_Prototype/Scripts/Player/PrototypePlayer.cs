@@ -50,24 +50,16 @@ public class PrototypePlayer : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        string tag = collision.gameObject.tag;
-        switch (tag)
+        if (collision.gameObject.CompareTag("SegmentTrigger"))
         {
-            case "NextTrigger":
-                m_levelSpawner.NextTriggerHandle(
-                    collision.transform.parent.parent,
-                    IsTriggerEnteredFromBelow(collision)
-                );
-                break;
-            case "PrevTrigger":
-                m_levelSpawner.PrevTriggerHandle(
-                    collision.transform.parent.parent,
-                    IsTriggerEnteredFromBelow(collision)
-                );
-                break;
-            default:
-                Debug.LogWarning("Hit unknown trigger: " + collision.gameObject.name);
-                break;
+            m_levelSpawner.TriggerHandle(
+                collision.transform.parent.parent,
+                IsTriggerEnteredFromBelow(collision)
+            );
+        }
+        else
+        {
+            Debug.LogWarning("Hit unknown trigger: " + collision.gameObject.name);
         }
     }
 
