@@ -14,10 +14,6 @@ public class PrototypePlayer : MonoBehaviour
     [Tooltip("The maximum movement speed of the player.")]
     [SerializeField] private float m_maxMovementSpeed = 10.0f;
 
-    [Header("Connection with Level Spawner")]
-    [Tooltip("Reference to the level spawner in the scene.")]
-    [SerializeField] private PrototypeLevelSpawner m_levelSpawner;
-
     #endregion
 
     #region Monobehaviour Methods
@@ -52,7 +48,7 @@ public class PrototypePlayer : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("SegmentTrigger"))
         {
-            m_levelSpawner.TriggerHandle(
+            PrototypeGameManager.Instance.HandleSegmenTrigger(
                 collision.transform.parent.parent,
                 IsTriggerEnteredFromBelow(collision)
             );

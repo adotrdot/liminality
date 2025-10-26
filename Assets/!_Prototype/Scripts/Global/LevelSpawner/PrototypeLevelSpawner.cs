@@ -16,6 +16,7 @@ public class PrototypeLevelSpawner : MonoBehaviour
     [SerializeField] private GameObject m_segmentSpawnPoint1;
     [SerializeField] private GameObject m_segmentSpawnPoint2;
     private int m_segmentIndex = 0;
+    private int m_latestSegmentIndex = 0;
     
     #endregion
 
@@ -42,18 +43,19 @@ public class PrototypeLevelSpawner : MonoBehaviour
 
     #region Public Methods
 
-    public void TriggerHandle(Transform collisionRoot, bool isEnteredFromBelow)
+    public void SpawnSegment(Transform collisionRoot, bool isEnteredFromBelow)
     {
         GameObject currentSpawnPoint = collisionRoot.gameObject;
         GameObject otherSpawnPoint = (currentSpawnPoint == m_segmentSpawnPoint1)
                                         ? m_segmentSpawnPoint2 : m_segmentSpawnPoint1;
-        
+
         // Deactivate segment in other spawn point
         DeactivateSegmentAtPoint(otherSpawnPoint);
 
         if (isEnteredFromBelow)
         {
             // Increment segment index
+            if (IsInLatestSegment()) m_latestSegmentIndex++;
             m_segmentIndex++;
 
             // Place other spawn point above current
@@ -87,6 +89,12 @@ public class PrototypeLevelSpawner : MonoBehaviour
                 SpawnBeginningPathSegment(otherSpawnPoint);
             }
         }
+    }
+    
+    public bool IsInLatestSegment()
+    {
+        Debug.Log("Segment Index: " + m_segmentIndex + ", Latest Segment Index: " + m_latestSegmentIndex);
+        return m_segmentIndex == m_latestSegmentIndex;
     }
 
     #endregion
