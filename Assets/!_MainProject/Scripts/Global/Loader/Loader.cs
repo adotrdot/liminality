@@ -18,6 +18,7 @@ public class Loader : MonoBehaviour
     [Header("Scene Names")]
     [SerializeField] private string m_levelSceneName;
     [SerializeField] private string m_endingSceneName;
+    [SerializeField] private string m_mainMenuScenename;
 
     #endregion
 
@@ -44,7 +45,7 @@ public class Loader : MonoBehaviour
     public void LoadMainMenu()
     {
         m_LoaderAnimator.SetTrigger("FadeInTrigger");
-        StartCoroutine(LoadScene("00_MainMenu"));
+        StartCoroutine(LoadScene(m_mainMenuScenename));
     }
 
     /// <summary>

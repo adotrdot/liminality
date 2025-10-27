@@ -443,6 +443,7 @@ MonoBehaviour:
   m_LoaderSlider: {fileID: 634318397}
   m_levelSceneName: 1_Level
   m_endingSceneName: 2_Ending
+  m_mainMenuScenename: 3_MainMenu
 --- !u!95 &566840618
 Animator:
   serializedVersion: 5
@@ -652,7 +653,6 @@ MonoBehaviour:
   NarrativeDataEndingA: {fileID: 11400000, guid: 996fc640351f55148afc643b5d95100a, type: 2}
   NarrativeDataEndingB: {fileID: 11400000, guid: a5b5435eef59aff42a1c40c793ccf7e5, type: 2}
   NarrativeDataEndingC: {fileID: 11400000, guid: 4d0844c5ef13a20468fde2737f3c6e58, type: 2}
-  CurrentNarrativeDataIndex: -1
 --- !u!1 &634318395
 GameObject:
   m_ObjectHideFlags: 0
@@ -842,7 +842,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 908799768}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
@@ -934,6 +934,51 @@ MonoBehaviour:
   FadeImage: {fileID: 870279949}
   FaderText: {fileID: 70197714}
   FadeDuration: 1
+--- !u!1 &1413010479
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1413010481}
+  - component: {fileID: 1413010480}
+  m_Layer: 0
+  m_Name: UserDatabase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1413010480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413010479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d996338591a4a1449aa41a8c12e313a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Users: []
+--- !u!4 &1413010481
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413010479}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 378.65988, y: 249.55302, z: -2.3000503}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1720562088
 GameObject:
   m_ObjectHideFlags: 0
@@ -1223,4 +1268,5 @@ SceneRoots:
   - {fileID: 566840622}
   - {fileID: 634188721}
   - {fileID: 629027677}
+  - {fileID: 1413010481}
   - {fileID: 908799772}

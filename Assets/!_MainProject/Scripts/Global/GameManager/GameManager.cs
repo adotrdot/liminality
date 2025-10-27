@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 {
     #region Fields and properties
 
-    public static GameManager Instance;
+    public static GameManager Instance { get; private set; }
 
     [Header("Narrative Data")]
     [Tooltip("Holds the narrative data for each stage.")]
@@ -25,16 +25,20 @@ public class GameManager : MonoBehaviour
 
     // Variables to keep track of current narrative.
     private int m_totalNarrativeDataCount => NarrativeDataList.Count;
-    private int m_currentNarrativeDataIndex = 3;
+    private int m_currentNarrativeDataIndex = -1;
     public bool IsEnding => m_currentNarrativeDataIndex >= m_totalNarrativeDataCount;
+
+    // Keep track of ending score
+    public int EndingScoreA { get; private set; }
+    public int EndingScoreB { get; private set; }
 
     // References to in-game manager components.
     private LevelSpawner m_levelSpawner;
     private NarrativeManager m_narrativeManager;
 
-    // Keep track of ending score
-    private int m_endingScoreA = 0;
-    private int m_endingScoreB = 0;
+    // Reference to current active user
+    public UserAccount CurrentActiveUser { get; private set; }
+    public bool HasActiveUser => CurrentActiveUser != null;
 
     #endregion
 
@@ -57,10 +61,11 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Center lock the cursor
-        Cursor.lockState = CursorLockMode.Locked;
+        // Initialize user database
+        UserDatabase.Instance.Load();
 
-        NextStage();
+        // Load main menu
+        Loader.Instance.LoadMainMenu();
     }
 
     // Update is called once per frame
@@ -76,7 +81,6 @@ public class GameManager : MonoBehaviour
     public void NextStage()
     {
         m_currentNarrativeDataIndex++;
-        Debug.Log("Current narrative data index: " + m_currentNarrativeDataIndex + "| IsEnding: " + IsEnding);
 
         // Load level if narrative data is not exhausted,
         // otherwise load ending
@@ -104,7 +108,7 @@ public class GameManager : MonoBehaviour
         if (IsEnding) StartCoroutine(m_narrativeManager.PlayEndingNarrative());
     }
 
-    public void HandleSegmenTrigger(Transform collisionRoot, bool isEnteredFromBelow)
+    public void HandleSegmentTrigger(Transform collisionRoot, bool isEnteredFromBelow)
     {
         // Update current segment in level spawner to current segment of which its trigger
         // collided with player
@@ -139,22 +143,22 @@ public class GameManager : MonoBehaviour
 
     public void IncrementEndingScoreA()
     {
-        m_endingScoreA++;
+        EndingScoreA++;
     }
 
     public void IncrementEndingScoreB()
     {
-        m_endingScoreB++;
+        EndingScoreB++;
     }
 
-    public int GetEndingScoreA()
+    public void SetActiveUser(UserAccount user)
     {
-        return m_endingScoreA;
+        CurrentActiveUser = user;
     }
 
-    public int GetEndingScoreB()
+    public void ClearActiveUser()
     {
-        return m_endingScoreB;
+        CurrentActiveUser = null;
     }
 
     public void EndGame()
@@ -172,11 +176,11 @@ public class GameManager : MonoBehaviour
         {
             m_narrativeManager.NarrativeData = NarrativeDataList[m_currentNarrativeDataIndex];
         }
-        else if (m_endingScoreA >= 3)
+        else if (EndingScoreA >= 3)
         {
             m_narrativeManager.NarrativeData = NarrativeDataEndingA;
         }
-        else if (m_endingScoreB >= 3)
+        else if (EndingScoreB >= 3)
         {
             m_narrativeManager.NarrativeData = NarrativeDataEndingB;
         }

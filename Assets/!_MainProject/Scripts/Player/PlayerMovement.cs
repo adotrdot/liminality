@@ -51,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("SegmentTrigger"))
         {
-            GameManager.Instance.HandleSegmenTrigger(
+            GameManager.Instance.HandleSegmentTrigger(
                 collision.transform.parent,
                 IsTriggerEnteredFromBelow(collision)
             );
