@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
 
     [Header("References to Other Components")]
     public UserManagementMenu UserManagementMenu;
+    public AchievementMenu AchievementMenu;
 
     [Header("Main Control Buttons")]
     [SerializeField] private Button m_startButton;
@@ -30,8 +31,9 @@ public class MainMenu : MonoBehaviour
         // Connect listeners
         m_startButton.onClick.AddListener(OnStartClicked);
         m_loadButton.onClick.AddListener(OnLoadClicked);
-        m_manageEchoesButton.onClick.AddListener(OnManageEchoesClicked);
+        m_manageEchoesButton.onClick.AddListener(UserManagementMenu.ShowMenu);
         m_exitButton.onClick.AddListener(OnExitClicked);
+        m_achievementButton.onClick.AddListener(AchievementMenu.ShowMenu);
     }
 
     #endregion
@@ -63,9 +65,7 @@ public class MainMenu : MonoBehaviour
 
     private void OnStartClicked()
     {
-        // Start new game logic
-        Debug.Log("Start clicked");
-        // GameManager.Instance.StartNewGame();
+        GameManager.Instance.NextStage();
     }
 
     private void OnLoadClicked()
@@ -73,12 +73,6 @@ public class MainMenu : MonoBehaviour
         // Load existing save logic
         Debug.Log("Load clicked");
         // Show load UI
-    }
-
-    private void OnManageEchoesClicked()
-    {
-        // Open user management menu popup
-        UserManagementMenu.ShowMenu();
     }
 
     private void OnExitClicked()

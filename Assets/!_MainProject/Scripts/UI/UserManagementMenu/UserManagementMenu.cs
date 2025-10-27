@@ -22,7 +22,7 @@ public class UserManagementMenu : MonoBehaviour
     void Start()
     {
         // Initially disable this
-        this.gameObject.SetActive(false);
+        HideMenu();
 
         // Add button listeners
         m_closeButton.onClick.AddListener(HideMenu);

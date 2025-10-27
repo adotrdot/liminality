@@ -78,6 +78,13 @@ public class GameManager : MonoBehaviour
 
     #region Public methods
 
+    public void ResetGameManager()
+    {
+        m_currentNarrativeDataIndex = -1;
+        EndingScoreA = 0;
+        EndingScoreB = 0;
+    }
+
     public void NextStage()
     {
         m_currentNarrativeDataIndex++;
@@ -163,7 +170,28 @@ public class GameManager : MonoBehaviour
 
     public void EndGame()
     {
-        Debug.Log("END GAME");
+        if (EndingScoreA >= 3)
+        {
+            // ENDING A
+            CurrentActiveUser.Achievements[0].IsUnlocked = true;
+        }
+        else if (EndingScoreB >= 3)
+        {
+            // ENDING B
+            CurrentActiveUser.Achievements[1].IsUnlocked = true;
+        }
+        else
+        {
+            // ENDING C
+            CurrentActiveUser.Achievements[2].IsUnlocked = true;
+        }
+
+        // Save to database
+        UserDatabase.Instance.Save();
+
+        // Reset index, score, and go back to main menu
+        ResetGameManager();
+        Loader.Instance.LoadMainMenu();
     }
 
     #endregion
