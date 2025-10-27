@@ -33,7 +33,7 @@ public class PrototypeNarrativeManager : MonoBehaviour
 
     #region Public Methods
     
-    public void PlayNextNarrativeLine()
+    public void PlayNextNarrativeLine(Vector2 segmentPosition)
     {
         // Cancel if narrative is currently playing or finished
         if (NarrativeCanvas.IsActive || IsNarrativeFinished)
@@ -43,7 +43,7 @@ public class PrototypeNarrativeManager : MonoBehaviour
         if (m_currentLineIndex < m_totalLines)
         {
             PrototypeNarrativeLine currentLine = m_narrativeLines[m_currentLineIndex];
-            NarrativeCanvas.ShowNarrativeText(currentLine.NarrativeText, currentLine.LineDuration);
+            NarrativeCanvas.ShowNarrativeText(currentLine.NarrativeText, currentLine.LineDuration, segmentPosition);
             m_currentLineIndex++;
         }
         else

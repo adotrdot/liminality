@@ -8,6 +8,8 @@ public class PrototypeNarrativeCanvas : MonoBehaviour
 
     public TextMeshProUGUI NarrativeTextUI;
 
+    public Vector2 OffsetToSegmentPosition;
+
     public bool IsActive => this.gameObject.activeSelf;
 
     private Tween m_currentTween;
@@ -27,10 +29,14 @@ public class PrototypeNarrativeCanvas : MonoBehaviour
 
     #region Public methods
     
-    public void ShowNarrativeText(string narrativeText, int lineDuration)
+    public void ShowNarrativeText(string narrativeText, int lineDuration, Vector2 segmentPosition)
     {
         // Kill any running tween to prevent overlap
         m_currentTween?.Kill();
+
+        // Set the narrative text position based on given parameter + offset
+        Vector2 position = segmentPosition + OffsetToSegmentPosition;
+        this.transform.position = position;
 
         // Make sure the object is active
         gameObject.SetActive(true);

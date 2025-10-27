@@ -15,6 +15,8 @@ public class PrototypeLevelSpawner : MonoBehaviour
     [Header("Segment Spawn Points")]
     [SerializeField] private GameObject m_segmentSpawnPoint1;
     [SerializeField] private GameObject m_segmentSpawnPoint2;
+    private GameObject m_currentSpawnPoint;
+    private GameObject m_otherSpawnPoint;
     private int m_segmentIndex = 0;
     private int m_latestSegmentIndex = 0;
     
@@ -43,14 +45,18 @@ public class PrototypeLevelSpawner : MonoBehaviour
 
     #region Public Methods
 
-    public void SpawnSegment(Transform collisionRoot, bool isEnteredFromBelow)
+    public void UpdateCurrentSegment(GameObject newCurrentSegment)
     {
-        GameObject currentSpawnPoint = collisionRoot.gameObject;
-        GameObject otherSpawnPoint = (currentSpawnPoint == m_segmentSpawnPoint1)
+        m_currentSpawnPoint = newCurrentSegment;
+    }
+
+    public void SpawnSegment(bool isEnteredFromBelow)
+    {
+        m_otherSpawnPoint = (m_currentSpawnPoint == m_segmentSpawnPoint1)
                                         ? m_segmentSpawnPoint2 : m_segmentSpawnPoint1;
 
         // Deactivate segment in other spawn point
-        DeactivateSegmentAtPoint(otherSpawnPoint);
+        DeactivateSegmentAtPoint(m_otherSpawnPoint);
 
         if (isEnteredFromBelow)
         {
@@ -59,13 +65,13 @@ public class PrototypeLevelSpawner : MonoBehaviour
             m_segmentIndex++;
 
             // Place other spawn point above current
-            otherSpawnPoint.transform.position = new Vector2(
-                currentSpawnPoint.transform.position.x,
-                currentSpawnPoint.transform.position.y + m_segmentHeight
+            m_otherSpawnPoint.transform.position = new Vector2(
+                m_currentSpawnPoint.transform.position.x,
+                m_currentSpawnPoint.transform.position.y + m_segmentHeight
             );
 
             // Spawn straight path segment at other spawn point
-            SpawnStraightPathSegment(otherSpawnPoint);
+            SpawnStraightPathSegment(m_otherSpawnPoint);
         }
         else
         {
@@ -73,22 +79,33 @@ public class PrototypeLevelSpawner : MonoBehaviour
             m_segmentIndex--;
 
             // Place other spawn point below current
-            otherSpawnPoint.transform.position = new Vector2(
-                currentSpawnPoint.transform.position.x,
-                currentSpawnPoint.transform.position.y - m_segmentHeight
-            );
+            m_otherSpawnPoint.transform.position = new Vector2(
+                 m_currentSpawnPoint.transform.position.x,
+                 m_currentSpawnPoint.transform.position.y - m_segmentHeight
+             );
 
             if (m_segmentIndex > 1)
             {
                 // Spawn straight path segment at other spawn point
-                SpawnStraightPathSegment(otherSpawnPoint);
+                SpawnStraightPathSegment(m_otherSpawnPoint);
             }
             else if (m_segmentIndex == 1)
             {
                 // Spawn beginning path segment at other spawn point
-                SpawnBeginningPathSegment(otherSpawnPoint);
+                SpawnBeginningPathSegment(m_otherSpawnPoint);
             }
         }
+    }
+
+    public Vector2 GetCurrentSegmentWorldPosition()
+    {
+        if (m_currentSpawnPoint == null)
+        {
+            Debug.LogWarning("Current spawn point is null. Returning zero vector.");
+            return Vector2.zero;            
+        }
+
+        return (Vector2) m_currentSpawnPoint.transform.position;
     }
     
     public bool IsInLatestSegment()

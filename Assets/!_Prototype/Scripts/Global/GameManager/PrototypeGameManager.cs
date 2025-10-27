@@ -52,16 +52,22 @@ public class PrototypeGameManager : MonoBehaviour
     
     public void HandleSegmenTrigger(Transform collisionRoot, bool isEnteredFromBelow)
     {
+        // Update current segment in level spawner to current segment of which its trigger
+        // collided with player
+        m_levelSpawner.UpdateCurrentSegment(collisionRoot.gameObject);
+
         // Play next narrative line only if player is
         // - in the latest segment; and
         // - entering from below
         if (isEnteredFromBelow && m_levelSpawner.IsInLatestSegment())
         {
-            m_narrativeManager.PlayNextNarrativeLine();
+            m_narrativeManager.PlayNextNarrativeLine(
+                m_levelSpawner.GetCurrentSegmentWorldPosition()
+            );
         }
 
         // Spawn segment using level spawner
-        m_levelSpawner.SpawnSegment(collisionRoot, isEnteredFromBelow);
+        m_levelSpawner.SpawnSegment(isEnteredFromBelow);
     }
 
     #endregion

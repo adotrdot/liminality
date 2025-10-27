@@ -16,8 +16,6 @@ MonoBehaviour:
   - NarrativeText: You awaken again.
     LineDuration: 3
   - NarrativeText: Even the void could not forget your shape.
-    LineDuration: 5
-  - NarrativeText: Even the void could not forget your shape.
     LineDuration: 4
   - NarrativeText: You have walked this bridge more times than stars can count.
     LineDuration: 5
@@ -25,4 +23,3 @@ MonoBehaviour:
     LineDuration: 5
   PlayerChoiceA: Because I must.
   PlayerChoiceB: I wish I hadn't.
-  CurrentLineIndex: 0
