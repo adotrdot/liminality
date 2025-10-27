@@ -7,6 +7,9 @@ TagManager:
   - BeginningPathSegment
   - StraightPathSegment
   - SegmentTrigger
+  - BranchingPathSegment
+  - ChoiceTriggerA
+  - ChoiceTriggerB
   layers:
   - Default
   - TransparentFX

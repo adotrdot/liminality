@@ -49,9 +49,19 @@ public class PrototypePlayer : MonoBehaviour
         if (collision.gameObject.CompareTag("SegmentTrigger"))
         {
             PrototypeGameManager.Instance.HandleSegmenTrigger(
-                collision.transform.parent.parent,
+                collision.transform.parent,
                 IsTriggerEnteredFromBelow(collision)
             );
+        }
+        else if (collision.gameObject.CompareTag("ChoiceTriggerA"))
+        {
+            PrototypeGameManager.Instance.IncrementEndingScoreA();
+            PrototypeGameManager.Instance.NextStage();
+        }
+        else if (collision.gameObject.CompareTag("ChoiceTriggerB"))
+        {
+            PrototypeGameManager.Instance.IncrementEndingScoreB();
+            PrototypeGameManager.Instance.NextStage();
         }
         else
         {

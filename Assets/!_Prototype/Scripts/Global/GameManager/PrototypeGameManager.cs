@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PrototypeGameManager : MonoBehaviour
@@ -6,8 +7,16 @@ public class PrototypeGameManager : MonoBehaviour
 
     public static PrototypeGameManager Instance;
 
+    public List<PrototypeNarrativeData> NarrativeDataList;
+    public int TotalNarrativeDataCount => NarrativeDataList.Count;
+    [HideInInspector] int CurrentNarrativeDataIndex = -1;
+
     private PrototypeLevelSpawner m_levelSpawner;
     private PrototypeNarrativeManager m_narrativeManager;
+
+    // Keep track of ending score
+    private int m_endingScoreA = 0;
+    private int m_endingScoreB = 0;
 
     #endregion
 
@@ -30,7 +39,10 @@ public class PrototypeGameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InitializeGameManager();
+        // Center lock the cursor
+        Cursor.lockState = CursorLockMode.Locked;
+
+        NextStage();
     }
 
     // Update is called once per frame
@@ -43,31 +55,83 @@ public class PrototypeGameManager : MonoBehaviour
 
     #region Public methods
 
-    public void InitializeGameManager()
+    public void NextStage()
     {
-        // Get references to other managers in this stage/scene
-        m_levelSpawner = FindObjectOfType<PrototypeLevelSpawner>();
-        m_narrativeManager = FindObjectOfType<PrototypeNarrativeManager>();
+        CurrentNarrativeDataIndex++;
+        Loader.Instance.LoadLevel();
     }
-    
+
+    public void SetLevelSpawner(PrototypeLevelSpawner levelSpawner)
+    {
+        m_levelSpawner = levelSpawner;
+    }
+
+    public void SetNarrativeManager(PrototypeNarrativeManager narrativeManager)
+    {
+        m_narrativeManager = narrativeManager;
+        SetNarrativeManagerData();
+    }
+
     public void HandleSegmenTrigger(Transform collisionRoot, bool isEnteredFromBelow)
     {
         // Update current segment in level spawner to current segment of which its trigger
         // collided with player
-        m_levelSpawner.UpdateCurrentSegment(collisionRoot.gameObject);
+        m_levelSpawner.UpdateCurrentSegment(collisionRoot.parent.gameObject);
+
+        // If end segment is reached, play choice segment
+        // and return immediately
+        if (collisionRoot.gameObject.CompareTag("BranchingPathSegment"))
+        {
+            m_narrativeManager.PlayChoiceSegment(
+                m_levelSpawner.GetCurrentSegmentWorldPosition()
+            );
+            return;
+        }
 
         // Play next narrative line only if player is
         // - in the latest segment; and
         // - entering from below
         if (isEnteredFromBelow && m_levelSpawner.IsInLatestSegment())
         {
-            m_narrativeManager.PlayNextNarrativeLine(
-                m_levelSpawner.GetCurrentSegmentWorldPosition()
-            );
+            if (!m_narrativeManager.IsNarrativeFinished)
+            {
+                m_narrativeManager.PlayNextNarrativeLine(
+                    m_levelSpawner.GetCurrentSegmentWorldPosition()
+                );
+            }
         }
 
         // Spawn segment using level spawner
-        m_levelSpawner.SpawnSegment(isEnteredFromBelow);
+        m_levelSpawner.SpawnSegment(isEnteredFromBelow, m_narrativeManager.IsNarrativeFinished);
+    }
+
+    public void IncrementEndingScoreA()
+    {
+        m_endingScoreA++;
+    }
+
+    public void IncrementEndingScoreB()
+    {
+        m_endingScoreB++;
+    }
+
+    public int GetEndingScoreA()
+    {
+        return m_endingScoreA;
+    }
+
+    public int GetEndingScoreB()
+    {
+        return m_endingScoreB;
+    }
+
+    #endregion
+
+    #region Private methods
+    
+    private void SetNarrativeManagerData()
+    {
+        m_narrativeManager.NarrativeData = NarrativeDataList[CurrentNarrativeDataIndex];
     }
 
     #endregion

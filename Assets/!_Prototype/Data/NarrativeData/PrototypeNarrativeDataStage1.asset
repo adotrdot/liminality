@@ -19,7 +19,7 @@ MonoBehaviour:
     LineDuration: 4
   - NarrativeText: You have walked this bridge more times than stars can count.
     LineDuration: 5
-  - NarrativeText: "Tell me, little light\u2026 why do you return?"
+  - NarrativeText: "Tell me, little light\u2026 Why do you return?"
     LineDuration: 5
   PlayerChoiceA: Because I must.
   PlayerChoiceB: I wish I hadn't.

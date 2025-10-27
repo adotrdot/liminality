@@ -16,7 +16,8 @@ public class Loader : MonoBehaviour
     [SerializeField] private UnityEngine.UI.Slider m_LoaderSlider;
 
     [Header("Scene Names")]
-    [SerializeField] private string m_FirstLevelSceneName;
+    [SerializeField] private string m_levelSceneName;
+    [SerializeField] private string m_endingSceneName;
 
     #endregion
 
@@ -43,22 +44,25 @@ public class Loader : MonoBehaviour
     public void LoadMainMenu()
     {
         m_LoaderAnimator.SetTrigger("FadeInTrigger");
-        StartCoroutine(LoadLevel("00_MainMenu"));
+        StartCoroutine(LoadScene("00_MainMenu"));
     }
 
     /// <summary>
-    /// Initiates loading the first level with a fade-in animation.
+    /// Initiates loading level with a fade-in animation.
     /// </summary>
-    public void LoadFirstLevel()
+    public void LoadLevel()
     {
         m_LoaderAnimator.SetTrigger("FadeInTrigger");
-        StartCoroutine(LoadLevel(m_FirstLevelSceneName));
+        StartCoroutine(LoadScene(m_levelSceneName));
     }
 
-    public void LoadNextLevel(string sceneName)
+    /// <summary>
+    /// Initiates loading the ending level with a fade-in animation.
+    /// </summary>
+    public void LoadEnding()
     {
         m_LoaderAnimator.SetTrigger("FadeInTrigger");
-        StartCoroutine(LoadLevel(sceneName));
+        StartCoroutine(LoadScene(m_endingSceneName));
     }
 
     #endregion
@@ -80,7 +84,7 @@ public class Loader : MonoBehaviour
     /// </summary>
     /// <param name="sceneName">The name of the scene to load</param>
     /// <returns></returns>
-    private IEnumerator LoadLevel(string sceneName)
+    private IEnumerator LoadScene(string sceneName)
     {
         // Reset slider value
         m_LoaderSlider.value = 0;

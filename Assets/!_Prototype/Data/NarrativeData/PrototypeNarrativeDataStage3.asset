@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36577aa75f806e34fba34fa4f672a781, type: 3}
+  m_Name: PrototypeNarrativeDataStage3
+  m_EditorClassIdentifier: 
+  NarrativeLines:
+  - NarrativeText: "You have carried every life upon your shoulders.\t"
+    LineDuration: 4
+  - NarrativeText: Each choice, each sorrow, each joy.
+    LineDuration: 3
+  - NarrativeText: Will you bear them once more? To feel, to try, to fail again.
+    LineDuration: 4
+  - NarrativeText: Or let them fade into the dark?
+    LineDuration: 3
+  PlayerChoiceA: I will bear them.
+  PlayerChoiceB: Let go.

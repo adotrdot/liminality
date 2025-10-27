@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 169d5d8d6bed8684a96d216a2b0549f8, type: 3}
+  m_Name: NarrativeDataEndingB
+  m_EditorClassIdentifier: 
+  NarrativeLines:
+  - NarrativeText: You release all that ever was.
+    LineDuration: 2
+  - NarrativeText: No breath, no name, no memory remains.
+    LineDuration: 3
+  - NarrativeText: The bridge fades, and the void folds its arms around you.
+    LineDuration: 4
+  - NarrativeText: At last, you are still.
+    LineDuration: 4
+  PlayerChoiceA: 
+  PlayerChoiceB: 

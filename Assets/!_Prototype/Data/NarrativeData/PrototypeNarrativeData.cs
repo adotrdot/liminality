@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PrototypeNarrativeData", menuName = "Scriptable Objects/Narrative Data")]
+[CreateAssetMenu(fileName = "PrototypeNarrativeData", menuName = "Scriptable Objects/PrototypeNarrative Data")]
 public class PrototypeNarrativeData : ScriptableObject
 {
     [Tooltip("List of narrative lines for a segment.")]

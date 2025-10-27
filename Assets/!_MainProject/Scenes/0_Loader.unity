@@ -421,7 +421,7 @@ GameObject:
   - component: {fileID: 566840618}
   - component: {fileID: 566840617}
   m_Layer: 7
-  m_Name: LoadingCanvas
+  m_Name: Loader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -441,7 +441,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LoaderAnimator: {fileID: 566840618}
   m_LoaderSlider: {fileID: 634318397}
-  m_FirstLevelSceneName: 0_PrototypeScene
+  m_levelSceneName: 1_Level
+  m_endingSceneName: 2_Ending
 --- !u!95 &566840618
 Animator:
   serializedVersion: 5
@@ -587,18 +588,71 @@ MonoBehaviour:
   m_GameObject: {fileID: 629027676}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f261659737b853409fc72d407886dfa, type: 3}
+  m_Script: {fileID: 11500000, guid: b6a0b630f8534334297bd4132813fcb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MoveInput:
     m_Name: 
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 381bcf38-5b65-464b-924e-ced3a7dd9963
+    m_Id: bbe9339d-e0d9-4694-a9d6-c9aced648f55
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+--- !u!1 &634188719
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 634188721}
+  - component: {fileID: 634188722}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &634188721
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 634188719}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -27.665161, y: -10.793498, z: -0.2537444}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &634188722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 634188719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce6f9f51c8c054842b79354f399e8432, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NarrativeDataList:
+  - {fileID: 11400000, guid: 8eebacf6803d20248b503f3c70562910, type: 2}
+  - {fileID: 11400000, guid: 147148ab8141bad4d9ca24816e6f0661, type: 2}
+  - {fileID: 11400000, guid: 43fa7061be8f6034da7b7744dec00a0e, type: 2}
+  - {fileID: 11400000, guid: a64db31cfe0a04540bfd41f6ada42502, type: 2}
+  NarrativeDataEndingA: {fileID: 11400000, guid: 996fc640351f55148afc643b5d95100a, type: 2}
+  NarrativeDataEndingB: {fileID: 11400000, guid: a5b5435eef59aff42a1c40c793ccf7e5, type: 2}
+  NarrativeDataEndingC: {fileID: 11400000, guid: 4d0844c5ef13a20468fde2737f3c6e58, type: 2}
+  CurrentNarrativeDataIndex: -1
 --- !u!1 &634318395
 GameObject:
   m_ObjectHideFlags: 0
@@ -1167,5 +1221,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 566840622}
+  - {fileID: 634188721}
   - {fileID: 629027677}
   - {fileID: 908799772}

@@ -27,6 +27,9 @@ public class PrototypeLevelSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Set this level spawner in game manager
+        PrototypeGameManager.Instance.SetLevelSpawner(this);
+        
         // Place segment spawn points at their initial positions
         m_segmentSpawnPoint1.transform.position = Vector2.zero;
         m_segmentSpawnPoint2.transform.position = new Vector2(0, m_segmentHeight);
@@ -50,7 +53,7 @@ public class PrototypeLevelSpawner : MonoBehaviour
         m_currentSpawnPoint = newCurrentSegment;
     }
 
-    public void SpawnSegment(bool isEnteredFromBelow)
+    public void SpawnSegment(bool isEnteredFromBelow, bool isBranching = false)
     {
         m_otherSpawnPoint = (m_currentSpawnPoint == m_segmentSpawnPoint1)
                                         ? m_segmentSpawnPoint2 : m_segmentSpawnPoint1;
@@ -70,8 +73,16 @@ public class PrototypeLevelSpawner : MonoBehaviour
                 m_currentSpawnPoint.transform.position.y + m_segmentHeight
             );
 
-            // Spawn straight path segment at other spawn point
-            SpawnStraightPathSegment(m_otherSpawnPoint);
+            // Spawn straight path segment at other spawn point if not branching,
+            // otherwise spawn branching segment ahead.
+            if (!isBranching)
+            {
+                SpawnStraightPathSegment(m_otherSpawnPoint);
+            }
+            else
+            {
+                SpawnBranchingPathSegment(m_otherSpawnPoint);
+            }
         }
         else
         {
@@ -107,11 +118,15 @@ public class PrototypeLevelSpawner : MonoBehaviour
 
         return (Vector2) m_currentSpawnPoint.transform.position;
     }
-    
+
     public bool IsInLatestSegment()
     {
-        Debug.Log("Segment Index: " + m_segmentIndex + ", Latest Segment Index: " + m_latestSegmentIndex);
         return m_segmentIndex == m_latestSegmentIndex;
+    }
+    
+    public bool IsInEndSegment()
+    {
+        return m_currentSpawnPoint.gameObject.CompareTag("BranchingPathSegment");
     }
 
     #endregion
@@ -128,6 +143,12 @@ public class PrototypeLevelSpawner : MonoBehaviour
     {
         GameObject straightSegment = m_segmentObjectPool.GetStraightPathSegment();
         SpawnSegmentAtPoint(straightSegment, spawnPoint);
+    }
+
+    private void SpawnBranchingPathSegment(GameObject spawnPoint)
+    {
+        GameObject branchingSegment = m_segmentObjectPool.GetBranchingPathSegment();
+        SpawnSegmentAtPoint(branchingSegment, spawnPoint);
     }
 
     private void SpawnSegmentAtPoint(GameObject segment, GameObject spawnPoint)
@@ -150,7 +171,7 @@ public class PrototypeLevelSpawner : MonoBehaviour
         {
             GameObject segment = spawnPoint.transform.GetChild(0).gameObject;
             segment.SetActive(false);
-            m_segmentObjectPool.ReturnPathSegment(segment);
+            m_segmentObjectPool.ReturnPathSegmentToPool(segment);
         }
     }
 

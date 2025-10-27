@@ -5,11 +5,7 @@ public class PrototypeSegmentObjectPool : MonoBehaviour
 {
     #region Fields and Properties
 
-    public enum SegmentType
-    {
-        BeginningPathSegment,
-        StraightPathSegment
-    }
+    
 
     #endregion
 
@@ -33,15 +29,20 @@ public class PrototypeSegmentObjectPool : MonoBehaviour
 
     public GameObject GetBeginningPathSegment()
     {
-        return GetPathSegment(SegmentType.BeginningPathSegment);
+        return GetPathSegment(PrototypeSegmentType.BeginningPathSegment);
     }
 
     public GameObject GetStraightPathSegment()
     {
-        return GetPathSegment(SegmentType.StraightPathSegment);
+        return GetPathSegment(PrototypeSegmentType.StraightPathSegment);
     }
 
-    public void ReturnPathSegment(GameObject segment)
+    public GameObject GetBranchingPathSegment()
+    {
+        return GetPathSegment(PrototypeSegmentType.BranchingPathSegment);
+    }
+
+    public void ReturnPathSegmentToPool(GameObject segment)
     {
         segment.SetActive(false);
         segment.transform.SetParent(transform);
@@ -51,18 +52,21 @@ public class PrototypeSegmentObjectPool : MonoBehaviour
 
     #region Private and protected methods
     
-    private GameObject GetPathSegment(SegmentType segmentType)
+    private GameObject GetPathSegment(PrototypeSegmentType segmentType)
     {
         GameObject segment = null;
         string tag;
 
         switch (segmentType)
         {
-            case SegmentType.BeginningPathSegment:
+            case PrototypeSegmentType.BeginningPathSegment:
                 tag = "BeginningPathSegment";
                 break;
-            case SegmentType.StraightPathSegment:
+            case PrototypeSegmentType.StraightPathSegment:
                 tag = "StraightPathSegment";
+                break;
+            case PrototypeSegmentType.BranchingPathSegment:
+                tag = "BranchingPathSegment";
                 break;
             default:
                 tag = "";
