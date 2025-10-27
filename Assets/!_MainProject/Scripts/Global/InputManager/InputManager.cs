@@ -13,6 +13,7 @@ public class InputManager : MonoBehaviour
 
     // InputAction variables
     [HideInInspector] public InputAction MoveInput;
+    [HideInInspector] public InputAction PauseAction;
 
     // Movement property
     [HideInInspector] public Vector2 Movement => MoveInput.ReadValue<Vector2>().normalized;
@@ -39,6 +40,7 @@ public class InputManager : MonoBehaviour
     {
         // Initialize all inputs
         MoveInput = InputSystem.actions.FindAction("Move");
+        PauseAction = InputSystem.actions.FindAction("Pause");
     }
 
     #endregion

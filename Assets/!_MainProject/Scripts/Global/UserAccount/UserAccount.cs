@@ -5,7 +5,7 @@ public class UserAccount
 {
     public string Username;
     public List<Achievement> Achievements = new List<Achievement>();
-    public SaveData[] Saves = new SaveData[5];
+    public SaveData[] Saves = new SaveData[3];
 
     public UserAccount(string username)
     {

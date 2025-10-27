@@ -25,8 +25,8 @@ public class GameManager : MonoBehaviour
 
     // Variables to keep track of current narrative.
     private int m_totalNarrativeDataCount => NarrativeDataList.Count;
-    private int m_currentNarrativeDataIndex = -1;
-    public bool IsEnding => m_currentNarrativeDataIndex >= m_totalNarrativeDataCount;
+    public int CurrentNarrativeDataIndex { get; private set; } = -1;
+    public bool IsEnding => CurrentNarrativeDataIndex >= m_totalNarrativeDataCount;
 
     // Keep track of ending score
     public int EndingScoreA { get; private set; }
@@ -77,17 +77,17 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Public methods
-
+    
     public void ResetGameManager()
     {
-        m_currentNarrativeDataIndex = -1;
+        CurrentNarrativeDataIndex = -1;
         EndingScoreA = 0;
         EndingScoreB = 0;
     }
 
     public void NextStage()
     {
-        m_currentNarrativeDataIndex++;
+        CurrentNarrativeDataIndex++;
 
         // Load level if narrative data is not exhausted,
         // otherwise load ending
@@ -99,6 +99,21 @@ public class GameManager : MonoBehaviour
         {
             Loader.Instance.LoadEnding();
         }
+    }
+
+    public void BackToMainMenu()
+    {
+        // Reset index, score, and go back to main menu
+        ResetGameManager();
+        Loader.Instance.LoadMainMenu();
+    }
+
+    public void LoadGame(SaveData saveData)
+    {
+        CurrentNarrativeDataIndex = saveData.NarrativeDataIndex;
+        EndingScoreA = saveData.EndingScoreA;
+        EndingScoreB = saveData.EndingScoreB;
+        Loader.Instance.LoadLevel();
     }
 
     public void SetLevelSpawner(LevelSpawner levelSpawner)
@@ -189,9 +204,7 @@ public class GameManager : MonoBehaviour
         // Save to database
         UserDatabase.Instance.Save();
 
-        // Reset index, score, and go back to main menu
-        ResetGameManager();
-        Loader.Instance.LoadMainMenu();
+        BackToMainMenu();
     }
 
     #endregion
@@ -202,7 +215,7 @@ public class GameManager : MonoBehaviour
     {
         if (!IsEnding)
         {
-            m_narrativeManager.NarrativeData = NarrativeDataList[m_currentNarrativeDataIndex];
+            m_narrativeManager.NarrativeData = NarrativeDataList[CurrentNarrativeDataIndex];
         }
         else if (EndingScoreA >= 3)
         {

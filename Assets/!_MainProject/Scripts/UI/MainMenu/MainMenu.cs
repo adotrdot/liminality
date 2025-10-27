@@ -7,6 +7,7 @@ public class MainMenu : MonoBehaviour
     #region Fields and properties
 
     [Header("References to Other Components")]
+    public LoadMenu LoadMenu;
     public UserManagementMenu UserManagementMenu;
     public AchievementMenu AchievementMenu;
 
@@ -30,7 +31,7 @@ public class MainMenu : MonoBehaviour
 
         // Connect listeners
         m_startButton.onClick.AddListener(OnStartClicked);
-        m_loadButton.onClick.AddListener(OnLoadClicked);
+        m_loadButton.onClick.AddListener(LoadMenu.ShowMenu);
         m_manageEchoesButton.onClick.AddListener(UserManagementMenu.ShowMenu);
         m_exitButton.onClick.AddListener(OnExitClicked);
         m_achievementButton.onClick.AddListener(AchievementMenu.ShowMenu);
@@ -66,13 +67,6 @@ public class MainMenu : MonoBehaviour
     private void OnStartClicked()
     {
         GameManager.Instance.NextStage();
-    }
-
-    private void OnLoadClicked()
-    {
-        // Load existing save logic
-        Debug.Log("Load clicked");
-        // Show load UI
     }
 
     private void OnExitClicked()

@@ -69,8 +69,9 @@ public class UserDatabase : MonoBehaviour
                     writer.Write(user.Saves.Length);
                     foreach (var save in user.Saves)
                     {
-                        writer.Write(save.IsUsed);
                         writer.Write(save.NarrativeDataIndex);
+                        writer.Write(save.EndingScoreA);
+                        writer.Write(save.EndingScoreB);
                         writer.Write(save.SaveTime.ToBinary());
                     }
                 }
@@ -114,8 +115,9 @@ public class UserDatabase : MonoBehaviour
                     int saveCount = reader.ReadInt32();
                     for (int s = 0; s < saveCount; s++)
                     {
-                        account.Saves[s].IsUsed = reader.ReadBoolean();
                         account.Saves[s].NarrativeDataIndex = reader.ReadInt32();
+                        account.Saves[s].EndingScoreA = reader.ReadInt32();
+                        account.Saves[s].EndingScoreB = reader.ReadInt32();
                         account.Saves[s].SaveTime = DateTime.FromBinary(reader.ReadInt64());
                     }
 

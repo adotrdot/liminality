@@ -87,6 +87,9 @@ public class Loader : MonoBehaviour
     /// <returns></returns>
     private IEnumerator LoadScene(string sceneName)
     {
+        // Fade out and hide previous screen
+        yield return StartCoroutine(Fader.Instance.FadeOut());
+
         // Reset slider value
         m_LoaderSlider.value = 0;
 
