@@ -188,17 +188,20 @@ public class GameManager : MonoBehaviour
         if (EndingScoreA >= 3)
         {
             // ENDING A
-            CurrentActiveUser.Achievements[0].IsUnlocked = true;
+            if (!CurrentActiveUser.Achievements[0].IsUnlocked)
+                CurrentActiveUser.Achievements[0].IsUnlocked = true;
         }
         else if (EndingScoreB >= 3)
         {
             // ENDING B
-            CurrentActiveUser.Achievements[1].IsUnlocked = true;
+            if (!CurrentActiveUser.Achievements[1].IsUnlocked)
+                CurrentActiveUser.Achievements[1].IsUnlocked = true;
         }
         else
         {
             // ENDING C
-            CurrentActiveUser.Achievements[2].IsUnlocked = true;
+            if (!CurrentActiveUser.Achievements[2].IsUnlocked)
+                CurrentActiveUser.Achievements[2].IsUnlocked = true;
         }
 
         // Save to database
